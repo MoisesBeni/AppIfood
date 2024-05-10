@@ -185,4 +185,102 @@ CREATE TABLE adicionar_produto(
 ID_produto INT,
 ID_adicional INT
 );
-
+/* NESSA PARTE DO GODIGO SERA FEITA AS ALTERAÇÕES DAS TABELAS */
+*
+/* TABELA RESTAURANTE*/
+ALTER TABLE restaurante
+ADD CONSTRAINT categoria_estabelecimeto_FK
+FOREIGN KEY (categoria_estabelecimeto_ID) REFERENCES categoria_estabelecimeto (ID);
+/*TABELA ENDEREÇO*/
+ALTER TABLE endereco
+ADD CONSTRAINT usuario_FK
+FOREIGN KEY (ID_usuario) REFERENCES usuario(ID);
+ALTER TABLE endereco
+ADD CONSTRAINT restaurante_FK
+FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
+*
+/*TABELA PRODUTO*/
+ALTER TABLE produto
+ADD CONSTRAINT categoria_produto_FK
+FOREIGN KEY (categoria_produto_ID) REFERENCES categoria_produto(ID);
+ALTER TABLE produto
+ADD CONSTRAINT restaurante_FK
+FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
+*
+/*TABELA AVALIAÇÃO*/
+ALTER TABLE avaliacao
+ADD CONSTRAINT pedido_FK
+FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
+*
+/*TABELA PEDIDO*/
+ALTER TABLE pedido
+ADD CONSTRAINT endereco_FK
+FOREIGN KEY (endereco_ID) REFERENCES endereco(ID);
+ALTER TABLE pedido
+ADD CONSTRAINT usuario_FK
+FOREIGN KEY(ID_usuario) REFERENCES usuario(ID);
+ALTER TABLE pedido
+ADD CONSTRAINT restaurante_FK
+FOREIGN KEY(ID_restaurante) REFERENCES restaurante(ID);
+ALTER TABLE pedido
+ADD CONSTRAINT cupom_FK
+FOREIGN KEY (cupom_ID) REFERENCES cupom(ID);
+ALTER TABLE pedido
+ADD CONSTRAINT status_pedido_FK
+FOREIGN KEY (status_pedido_ID) REFERENCES status_pedido(ID);
+*
+/*TABELA ADICIONAR PRODUTO*/
+ALTER TABLE adicionar_produto
+ADD CONSTRAINT adicional_FK
+FOREIGN KEY (adicional_ID) REFERENCES adicional(ID);
+ALTER TABLE adicionar_produto
+ADD CONSTRAINT produto_FK
+FOREIGN KEY (ID_produto) REFERENCES produto(ID);
+*
+/*TABELA FAVORITOS*/
+ALTER TABLE favoritos
+ADD CONSTRAINT usuario_FK
+FOREIGN KEY (ID_usuario) REFERENCES usuario(ID);
+ALTER TABLE favoritos
+ADD CONSTRAINT restaurante_FK
+FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
+*
+/*TABELA PEDIDO-PRODUTO*/
+ALTER TABLE pedido_produto
+ADD CONSTRAINT pedido_FK
+FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
+ALTER TABLE pedido_produto
+ADD CONSTRAINT produto_FK
+FOREIGN KEY (ID_produto) REFERENCES produto(ID);
+*
+/*TABELA ADICIONAL-PRODUTO-PEDIDO*/
+ALTER TABLE adicional_produto_pedido
+ADD CONSTRAINT pedido_produto_FK
+FOREIGN KEY (pedido_produto_ID) REFERENCES pedido_produto(ID);
+ALTER TABLE adicional_produto_pedido
+ADD CONSTRAINT adicional_FK
+FOREIGN KEY (adicional_ID) REFERENCES adicional(ID);
+*
+/*TABELA HISTORICO PEDIDO*/
+ALTER TABLE historico_pedido
+ADD CONSTRAINT pedido_FK
+FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
+ALTER TABLE historico_pedido
+ADD CONSTRAINT status_pedido_FK
+FOREIGN KEY (status_pedido_ID) REFERENCES status_pedido(ID);
+*
+/*TABELA PAGAMENTO*/
+ALTER TABLE pagamento
+ADD CONSTRAINT pedido_FK
+FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
+ALTER TABLE pagamento
+ADD CONSTRAINT metado_pagamento_FK
+FOREIGN KEY (metado_pagamento_ID) REFERENCES metado_pagamento(ID);
+ALTER TABLE pagamento
+ADD CONSTRAINT status_pagamento_FK
+FOREIGN KEY (status_pagamento_ID) REFERENCES status_pagamento(ID);
+*
+/* TABELA FUNCIONAMENTO*/
+ALTER TABLE funcionamento_restaurante
+ADD CONSTRAINT restaurante_FK
+FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
