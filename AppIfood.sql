@@ -185,3 +185,4 @@ CREATE TABLE adicionar_produto(
 ID_produto INT,
 ID_adicional INT
 );
+
