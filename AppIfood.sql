@@ -272,104 +272,122 @@ FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
 
 /* ESSA PARTE DO CÓDIGO E A PARTE DE INSERIR DADOS*/
 
-/* USUSARIO*/
-INSERT INTO usuario(dateCreate,dateTime,status,nome,email,,senha,telefone,cpf) VALUES 
-(now(),19:22,1,'rafael','rafael922@gmail.com','rafael6226','(83)98234-4343','29292202192'),
-(now(),21:33,1,'thalia','thalia522@gmail.com','ailaht14321','(87)98123-3832','27382382384'),
-(now(),08:29,1,'camila','cami812@gmail.com','camilaviter23','(11)99273-3731','82819100022');
-/*RESTAURANTE*/
-INSERT INTO restaurante(dateCreate,dateTime,status,nome,descricao,telefone,avaliacao,cnpj,categoria_estabelecimeto_FK) VALUES
-(now(),12:11,1,'tapioca da ana','tapioca com os melhores produtos do mercado','91812-1211',5,'82912812973'1),
-(now(),22:11,1,'churrasco grego','o melhor dos churrascos gregos','23322-3232',3,'43433443433',2),
-(now(),09:42,0,'la casa de massa','as melhores massa so encontra aqui','32243-2323',5,'211221221212',3);
-/*CATEGORIA ESTABELECIMENTO*/
-INSERT INTO categoria_estabelecimeto(dateCreate,dateTime,status,nome,descricao) VALUES
-(now(),12:11,1,'fast food','pronto rapido'),
-(now(),22:11,1,'fast food','pronto rapido'),
-(now(),09:42,0,'italiano','italianos');
-/*ENDEREÇO*/
-INSERT INTO endereco(dateCreate, dateTime, status, rua, bairro, cidade, cep, numero, complemento, padrao,usuario_FK,restaurante_FK) VALUES
-(now(),12:11,1,'Rua Alfredo neves', 'Bairro Avenida ribero', 'Cidade aracaju', '12345-111', '101', 'a frete do estadio nilto santos', 0,1,1),
-(now(),22:11,1, 'Rua luiz dultra', 'Bairro Barcorna', 'Cidade Belo horizinte', '12345-222', '202', 'ao lado do mercado ABT ', 0,2,2),
-(now(),09:42,1,'Rua Carvalho', 'Bairro Centro', 'Cidade Caruaru', '12345-333', '303', 'perto do shopping ', 0,3,3);
-/*PRODUTO*/
-INSERT INTO produto (dateCreate, dateTime, status, nome, preco, descricao,categoria_produto_FK,restaurante_FK) VALUES
-(now(),12:11,1, 'recheio', 100, 'recheio de nutella',1,1),
-(now(),22:11,1,'carne', 300, 'picanha',2,2 ),
-(now(),09:42,1,'macarrão', 50, 'macarrão pra lasanha'3,3);
-/*CATEGORIA PRODUTO*/
-INSERT INTO categoria_produto (dateCreate, dateTime, status, nome, descricao) VALUES
-(now(),12:11,1, 'recheios', 'recheios pra comidas '),
-(now(),22:11,1,'carnes','carnes para churrascos'),
-(now(),09:42,1,'massas','todos os tipos de massa');
-/*ADICIONAL*/
-INSERT INTO adicional(dateCreate, dateTime, status, nome, valor, descricao) VALUES
-(now(),12:11,1, 'morango', 50, 'recheio de morango'),
-(now(),22:11,1,'picanha',120,'picanha mal passada'),
-(now(),09:42,1,'molho'21,'molho de tomate');
-/*PEDIDO*/
-INSERT INTO pedido(dateCreate, dateTime, status, taxaEntrega, valorTotal, descricao, is_retirada,endereco_FK,usuario_FK,restaurante_FK,cupom_FK,status_pedido_FK) VALUES
-(now(),12:11,1, 10, 150, 'traga o mais rapido possivel', 0,1,1,1,1,1 ),
-(now(),22:11,1, 15, 200, 'não demore', 1,2,2,2,2,2),
-(now(),09:42,1, 20, 180, 'não quero a massa fria', 0,3,3,3,3,3);
-/*STATUS PEDIDO*/
-INSERT INTO status_pedido(dateCreate, dateTime, status, nome, descricao)VALUES
-(now(),12:11,1, 'Em andamento', 'Pedido em andamento, aguardando preparo'),
-(now(),22:11,1,'Pronto para entrega', 'Pedido pronto para entrega ao cliente'),
-(now(),09:42,1,'Entregue', 'Pedido entregue com sucesso ao cliente');
-/*HISTORICO PEDIDO*/
-INSERT INTO historico_pedido(dateCreate, dateTime, status,pedido_FK,status_pedido_FK) VALUES
-(now(),12:11,1,1,1),
-(now(),22:11,1,2,2),
-(now(),09:42,1,3,3);
-/*CUPOM*/
-INSERT INTO cupom(dateCreate, dateTime, status, codigo, valor, descricao, validade) VALUES
-(now(),12:11,1,'CUPOM123', 10, 'Desconto de 10%',7),
-(now(),22:11,1,'CUPOM456', 20, 'Desconto de 20%', 14),
-(now(),09:42,1,'CUPOM789', 15, 'Desconto de 15%',30);
-/*ADICIONAL PRODUTO PEDIDO*/
-INSERT INTO adicional_produto_pedido(dateCreate, dateTime, status, quantidade,pedido_produto_FK,adicional_FK)VALUES
-(now(),12:11,1,2,1,1),
-(now(),22:11,1,5,2,2),
-(now(),09:42,1,12,3,3);
-/*AVALIAÇÃO*/
-INSERT INTO avaliacao(dateCreate, dateTime, status, nota_restaurante, nota_pedido, descricao,pedido_FK) VALUES 
-(now(),12:11,1, 4, 5, 'Excelente serviço e comida deliciosa',1),
-(now(),22:11,1,3, 4, 'Bom atendimento, mas a entrega demorou um pouco',2),
-(now(),09:42,1, 5, 5, 'Maravilhoso, entrega rápida e comida fresca',3);
-/*PAGAMENTO*/
-INSERT INTO pagamento(dateCreate, dateTime, status, valor, data_hora,pedido_FK,metado_pagamento_FK,status_pagamento_FK) VALUES
-(now(),12:11,1,500,12:45,1,1,1),
-(now(),22:11,1,750,16:57,2,2,2),
-(now(),09:42,1,340,09:00,3,3,3);
-/*METADO PAGAMENTO*/
-INSERT INTO metado_pagamento(dateCreate, dateTime, status, nome, descricao) VALUES
-(now(),12:11,1,'Cartão de Crédito', 'Pagamento via cartão de crédito'),
-(now(),22:11,1,'Cartão de Débito', 'Pagamento via cartão de débito'),
-(now(),09:42,1,'Pix','Pagamento via Pix');
-/* STATUS PAGAMENTO*/
-INSERT INTO status_pagamento (dateCreate, dateTime, status, nome, descricao) VALUES
-(now(),12:11,1,'Pendente', 'Pagamento ainda não realizado'),
-(now(),22:11,1,'Concluído', 'Pagamento concluído com sucesso'),
-(now(),09:42,1,'Reembolsado', 'Pagamento foi reembolsado ao cliente');
-/*FAVORITOS*/
-INSERT INTO favoritos(usuario_FK,restaurante_FK) VALUES
-(1,1),
-(2,2),
-(3,3);
- /*PEDIDO PRODUTO*/
- INSERT INTO pedido_produto (dateCreate, dateTime, status,pedido_FK,produto_FK) VALUES
-(now(),12:11,1,1,1),
-(now(),22:11,1,2,2),
-(now(),09:42,1,3,3);
-/*FUNCIONAMENTO RESTAURANTE*/
-INSERT INTO funcionamento_restaurante(dateCreate, dateTime, status, dia, hora_abrir, hora_fechar,restaurante_FK) VALUES
-(now(),12:11,1,5,08:00,22:00,1),
-(now(),22:11,1,7,10:00,20:00,2),
-(now(),09:42,1,4,07:00,18:00,3);
-/*ADICIONAR PRODUTO*/
-INSERT INTO adicionar_produto(produto_FK,adicional_FK) VALUES
-(1,1),
-(2,2),
-(3,3);
+/* INSERTS PARA A TABELA USUARIO*/
+INSERT INTO usuario (date_Create, status, nome, email, senha, telefone, cpf) VALUES
+(NOW(), 1, 'João', 'joao@example.com', 'senha123', '(11) 91234-5678', '12345678901'),
+(NOW(), 1, 'Maria', 'maria@example.com', 'senha456', '(11) 98765-4321', '98765432109'),
+(NOW(), 1, 'Pedro', 'pedro@example.com', 'senha789', '(11) 94567-1234', '45678901234');
 
+/* INSERTS PARA A TABELA RESTAURANTE */
+INSERT INTO restaurante (date_Create, status, nome, descricao, telefone, avaliacao, cnpj) VALUES
+(NOW(), 1, 'Restaurante A', 'Restaurante A é especializado em pratos italianos', '(11) 1234-5678', 4.5, '12345678901234'),
+(NOW(), 1, 'Restaurante B', 'Restaurante B serve os melhores churrascos da região', '(11) 5678-1234', 4.7, '56789012345678'),
+(NOW(), 1, 'Restaurante C', 'Restaurante C oferece uma variedade de pratos da culinária japonesa', '(11) 9012-3456', 4.3, '90123456789012');
+
+/* INSERTS PARA A TABELA CATEGORIA_ESTABELECIMENTO */
+INSERT INTO categoria_estabelecimeto (date_Create, status, nome, descricao) VALUES
+(NOW(), 1, 'Italiano', 'Restaurantes que servem pratos italianos'),
+(NOW(), 1, 'Churrascaria', 'Restaurantes especializados em churrascos'),
+(NOW(), 1, 'Japonês', 'Restaurantes que oferecem pratos da culinária japonesa');
+
+/* INSERTS PARA A TABELA ENDEREÇO*/
+INSERT INTO endereco (date_Create, status, rua, bairro, cidade, cep, numero, complemento, padrao) VALUES
+(NOW(), 1, 'Rua A', 'Bairro X', 'Cidade 1', '12345-678', '123', 'Próximo ao Parque', 1),
+(NOW(), 1, 'Rua B', 'Bairro Y', 'Cidade 2', '98765-432', '456', 'Próximo à Praia', 0),
+(NOW(), 1, 'Rua C', 'Bairro Z', 'Cidade 3', '54321-876', '789', 'Próximo à Estação', 0);
+
+/* INSERTS PARA A TABELA PRODUTO */
+INSERT INTO produto (date_Create, status, nome, preco, descricao) VALUES
+(NOW(), 1, 'Pizza Margherita', 30, 'Pizza de mussarela, tomate e manjericão'),
+(NOW(), 1, 'Churrasco Misto', 50, 'Churrasco com picanha, linguiça e frango'),
+(NOW(), 1, 'Sushi Combo', 80, 'Combo de sushi com uma variedade de peixes e acompanhamentos');
+
+/* INSERTS PARA A TABELA CATEGORIA_PRODUTO */
+INSERT INTO categoria_produto (date_Create, status, nome, descricao) VALUES
+(NOW(), 1, 'Pizza', 'Diversos sabores de pizza'),
+(NOW(), 1, 'Churrasco', 'Carnes grelhadas e acompanhamentos'),
+(NOW(), 1, 'Sushi', 'Pratos típicos da culinária japonesa');
+
+/* INSERTS PARA A TABELA ADICIONAL */
+INSERT INTO adicional (date_Create, status, nome, valor, descricao) VALUES
+(NOW(), 1, 'Bacon', 5, 'Adicional de bacon para complementar seu prato'),
+(NOW(), 1, 'Queijo Extra', 3, 'Adicional de queijo extra para seu sanduíche'),
+(NOW(), 1, 'Molho Especial', 2, 'Molho especial para acompanhar suas batatas fritas');
+
+/* INSERTS PARA A TABELA PEDIDO */
+INSERT INTO pedido (date_Create, status, taxaEntrega, valorTotal, descricao, is_retirada) VALUES
+(NOW(), 1, 5, 60, 'Pedido para entrega em casa', 0),
+(NOW(), 1, 8, 100, 'Pedido para retirada no restaurante', 1),
+(NOW(), 1, 10, 120, 'Pedido para entrega no trabalho', 0);
+
+/* INSERTS PARA A TABELA STATUS_PEDIDO */
+INSERT INTO status_pedido (date_Create, status, nome, descricao) VALUES
+(NOW(), 1, 'Em Processamento', 'Pedido está em processo de preparo'),
+(NOW(), 1, 'Pronto para Entrega', 'Pedido está pronto para ser entregue ao cliente'),
+(NOW(), 1, 'Entregue', 'Pedido foi entregue ao cliente com sucesso');
+
+/* INSERTS PARA A TABELA HISTORICO_PEDIDO */
+INSERT INTO historico_pedido (date_Create, status,pedido_ID, status_pedido_ID) VALUES
+(NOW(), 1,1,1),
+(NOW(), 1,2,2),
+(NOW(), 1,3,3);
+
+/* INSERTS PARA A TABELA CUPOM */
+INSERT INTO cupom (date_Create, status, codigo, valor, descriao, validade) VALUES
+(NOW(), 1, 'DESC10', 10, 'Desconto de 10% em seu próximo pedido', 30),
+(NOW(), 1, 'FRETEGRATIS', 0, 'Frete grátis em seu próximo pedido', 15),
+(NOW(), 1, 'DESC20', 20, 'Desconto de 20% em seu próximo pedido', 45);
+
+/* INSERTS PARA A TABELA ADICIONAL_PRODUTO_PEDIDO */
+INSERT INTO adicional_produto_pedido (date_Create, status, quantidade, adicional_ID, ID_produto) VALUES
+(NOW(), 1, 2, 1, 1),
+(NOW(), 1, 3, 2, 2),
+(NOW(), 1, 1, 3, 3);
+
+/* INSERTS PARA A TABELA AVALIACAO */
+INSERT INTO avaliacao (date_Create, status, nota_restaurante, nota_pedido, descricao) VALUES
+(NOW(), 1, 4, 5, 'Excelente atendimento e comida deliciosa'),
+(NOW(), 1, 3, 4, 'Bom serviço, mas a entrega demorou um pouco'),
+(NOW(), 1, 5, 5, 'Serviço rápido e comida de alta qualidade');
+
+/* INSERTS PARA A TABELA PAGAMENTO */
+INSERT INTO pagamento (date_Create, status, valor, data_hora) VALUES
+(NOW(), 1, 50, '2024-05-14 12:45:00'),
+(NOW(), 1, 80, '2024-05-14 16:57:00'),
+(NOW(), 1, 100, '2024-05-14 09:00:00');
+
+/* INSERTS PARA A TABELA METADO_PAGAMENTO */
+INSERT INTO metado_pagamento (date_Create, status, nome, descricao) VALUES
+(NOW(), 1, 'Cartão de Crédito', 'Pagamento via cartão de crédito'),
+(NOW(), 1, 'Cartão de Débito', 'Pagamento via cartão de débito'),
+(NOW(), 1, 'Pix', 'Pagamento via Pix');
+
+/* INSERTS PARA A TABELA STATUS_PAGAMENTO */
+INSERT INTO status_pagamento (date_Create, status, nome, descricao) VALUES
+(NOW(), 1, 'Pendente', 'Pagamento ainda não realizado'),
+(NOW(), 1, 'Concluído', 'Pagamento concluído com sucesso'),
+(NOW(), 1, 'Reembolsado', 'Pagamento foi reembolsado ao cliente');
+
+/* INSERTS PARA A TABELA FAVORITOS */
+INSERT INTO favoritos (ID_usuario, ID_restaurante) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+/* INSERTS PARA A TABELA PEDIDO_PRODUTO */
+INSERT INTO pedido_produto (date_Create, status, pedido_ID, ID_produto) VALUES
+(NOW(), 1, 1, 1),
+(NOW(), 1, 2, 2),
+(NOW(), 1, 3, 3);
+
+/* INSERTS PARA A TABELA FUNCIONAMENTO_RESTAURANTE */
+INSERT INTO funcionamento_restaurante (date_Create, status, dia, hora_abrir, hora_fechar) VALUES
+(NOW(), 1, 1, 10:00, 22:00),
+(NOW(), 1, 2, 11:00, 23:00),
+(NOW(), 1, 3, 09:00, 21:00);
+
+/* INSERTS PARA A TABELA ADICIONAR_PRODUTO */
+INSERT INTO adicionar_produto (adicional_ID, ID_produto) VALUES
+( 1, 2),
+( 1, 3),
+( 1, 1);
