@@ -19,7 +19,8 @@ nome VARCHAR(60),
 descricao VARCHAR(60),
 telefone VARCHAR(20),
 avaliacao FLOAT,
-cnpj VARCHAR(30)
+cnpj VARCHAR(30),
+categoria_estabelecimento_ID INT
 );
 
 CREATE TABLE categoria_estabelecimeto(
@@ -40,7 +41,9 @@ cidade VARCHAR(60),
 cep VARCHAR(20),
 numero VARCHAR(10),
 complemento VARCHAR(100),
-padrao INT
+padrao INT,
+ID_usuario INT,
+ID_restaurante INT
 );
 
 CREATE TABLE produto(
@@ -49,7 +52,9 @@ date_Create datetime,
 status INT,
 nome VARCHAR(60),
 preco INT,
-descricao VARCHAR(60)
+descricao VARCHAR(60),
+categoria_produto_ID INT,
+ID_restaurante INT
 );
 
 CREATE TABLE categoria_produto(
@@ -75,8 +80,13 @@ date_Create datetime,
 status INT,
 taxaEntrega INT,
 valorTotal INT,
-descricao VARCHAR(60)
-is_retirada INT
+descricao VARCHAR(60),
+is_retirada INT,
+endereco_ID INT,
+ID_usuario INT,
+ID_restaurante INT,
+cupom_ID INT,
+status_pedido_ID INT
 );
 
 CREATE TABLE status_pedido(
@@ -90,7 +100,9 @@ descricao VARCHAR(60)
 CREATE TABLE historico_pedido(
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 date_Create datetime,
-status INT
+status INT,
+pedido_ID INT,
+status_pedido_ID INT
 );
 
 CREATE TABLE cupom(
@@ -107,7 +119,9 @@ CREATE TABLE adicional_produto_pedido(
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 date_Create datetime,
 status INT,
-quantidade INT
+quantidade INT,
+pedido_produto_ID INT,
+adicional_ID INT
 );
 
 CREATE TABLE avaliacao(
@@ -116,7 +130,8 @@ date_Create datetime,
 status INT,
 nota_restaurante INT,
 nota_pedido INT,
-descricao VARCHAR(60)
+descricao VARCHAR(60),
+pedido_ID INT
 );
 
 CREATE TABLE pagamento(
@@ -124,7 +139,10 @@ ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 date_Create datetime,
 status INT,
 valor INT NOT NULL,
-data_hora INT
+data_hora VARCHAR(60),
+pedido_ID INT,
+metado_pagamento_ID INT,
+status_pagamento_ID INT
 );
 
 CREATE TABLE metado_pagamento(
@@ -151,7 +169,9 @@ ID_restaurante INT
 CREATE TABLE pedido_produto(
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 date_Create datetime,
-status INT
+status INT,
+pedido_ID INT,
+ID_produto INT
 );
 
 CREATE TABLE funcionamento_restaurante(
@@ -160,7 +180,8 @@ date_Create datetime,
 status INT,
 dia INT,
 hora_abrir INT,
-hora_fechar INT
+hora_fechar INT,
+ID_restaurante INT
 );
 
 CREATE TABLE adicionar_produto(
@@ -174,7 +195,7 @@ ID_adicional INT
 /* TABELA RESTAURANTE*/
 ALTER TABLE restaurante
 ADD CONSTRAINT categoria_estabelecimeto_FK
-FOREIGN KEY (categoria_estabelecimeto_ID) REFERENCES categoria_estabelecimeto (ID);
+FOREIGN KEY (categoria_estabelecimento_ID) REFERENCES categoria_estabelecimeto (ID);
 
 /*TABELA ENDEREÇO*/
 ALTER TABLE endereco
@@ -189,7 +210,7 @@ ALTER TABLE produto
 ADD CONSTRAINT categoria_produto_FK
 FOREIGN KEY (categoria_produto_ID) REFERENCES categoria_produto(ID);
 ALTER TABLE produto
-ADD CONSTRAINT restaurante_FK
+ADD CONSTRAINT produto_restaurante_FK
 FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
 
 /*TABELA AVALIAÇÃO*/
@@ -202,10 +223,10 @@ ALTER TABLE pedido
 ADD CONSTRAINT endereco_FK
 FOREIGN KEY (endereco_ID) REFERENCES endereco(ID);
 ALTER TABLE pedido
-ADD CONSTRAINT usuario_FK
+ADD CONSTRAINT pedido_usuario_FK
 FOREIGN KEY(ID_usuario) REFERENCES usuario(ID);
 ALTER TABLE pedido
-ADD CONSTRAINT restaurante_FK
+ADD CONSTRAINT pedido_restaurante_FK
 FOREIGN KEY(ID_restaurante) REFERENCES restaurante(ID);
 ALTER TABLE pedido
 ADD CONSTRAINT cupom_FK
@@ -217,46 +238,46 @@ FOREIGN KEY (status_pedido_ID) REFERENCES status_pedido(ID);
 /*TABELA ADICIONAR PRODUTO*/
 ALTER TABLE adicionar_produto
 ADD CONSTRAINT adicional_FK
-FOREIGN KEY (adicional_ID) REFERENCES adicional(ID);
+FOREIGN KEY (ID_adicional) REFERENCES adicional(ID);
 ALTER TABLE adicionar_produto
 ADD CONSTRAINT produto_FK
 FOREIGN KEY (ID_produto) REFERENCES produto(ID);
 
 /*TABELA FAVORITOS*/
 ALTER TABLE favoritos
-ADD CONSTRAINT usuario_FK
+ADD CONSTRAINT favoritos_usuario_FK
 FOREIGN KEY (ID_usuario) REFERENCES usuario(ID);
 ALTER TABLE favoritos
-ADD CONSTRAINT restaurante_FK
+ADD CONSTRAINT favoritos_restaurante_FK
 FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
 
 /*TABELA PEDIDO-PRODUTO*/
 ALTER TABLE pedido_produto
-ADD CONSTRAINT pedido_FK
+ADD CONSTRAINT pedido_produto_pedido_FK
 FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
 ALTER TABLE pedido_produto
-ADD CONSTRAINT produto_FK
+ADD CONSTRAINT produto_pedido_produto_FK
 FOREIGN KEY (ID_produto) REFERENCES produto(ID);
 
 /*TABELA ADICIONAL-PRODUTO-PEDIDO*/
 ALTER TABLE adicional_produto_pedido
-ADD CONSTRAINT pedido_produto_FK
+ADD CONSTRAINT ad_pedido_produto_FK
 FOREIGN KEY (pedido_produto_ID) REFERENCES pedido_produto(ID);
 ALTER TABLE adicional_produto_pedido
-ADD CONSTRAINT adicional_FK
+ADD CONSTRAINT pedi_adicional_FK
 FOREIGN KEY (adicional_ID) REFERENCES adicional(ID);
 
 /*TABELA HISTORICO PEDIDO*/
 ALTER TABLE historico_pedido
-ADD CONSTRAINT pedido_FK
+ADD CONSTRAINT htro_pedido_FK
 FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
 ALTER TABLE historico_pedido
-ADD CONSTRAINT status_pedido_FK
+ADD CONSTRAINT his_status_pedido_FK
 FOREIGN KEY (status_pedido_ID) REFERENCES status_pedido(ID);
 
 /*TABELA PAGAMENTO*/
 ALTER TABLE pagamento
-ADD CONSTRAINT pedido_FK
+ADD CONSTRAINT paga_pedido_FK
 FOREIGN KEY (pedido_ID) REFERENCES pedido(ID);
 ALTER TABLE pagamento
 ADD CONSTRAINT metado_pagamento_FK
@@ -267,7 +288,7 @@ FOREIGN KEY (status_pagamento_ID) REFERENCES status_pagamento(ID);
 
 /* TABELA FUNCIONAMENTO*/
 ALTER TABLE funcionamento_restaurante
-ADD CONSTRAINT restaurante_FK
+ADD CONSTRAINT funcionamento_restaurante_FK
 FOREIGN KEY (ID_restaurante) REFERENCES restaurante(ID);
 
 /* ESSA PARTE DO CÓDIGO E A PARTE DE INSERIR DADOS*/
@@ -280,9 +301,9 @@ INSERT INTO usuario (date_Create, status, nome, email, senha, telefone, cpf) VAL
 
 /* INSERTS PARA A TABELA RESTAURANTE */
 INSERT INTO restaurante (date_Create, status, nome, descricao, telefone, avaliacao, cnpj) VALUES
-(NOW(), 1, 'Restaurante A', 'Restaurante A é especializado em pratos italianos', '(11) 1234-5678', 4.5, '12345678901234'),
-(NOW(), 1, 'Restaurante B', 'Restaurante B serve os melhores churrascos da região', '(11) 5678-1234', 4.7, '56789012345678'),
-(NOW(), 1, 'Restaurante C', 'Restaurante C oferece uma variedade de pratos da culinária japonesa', '(11) 9012-3456', 4.3, '90123456789012');
+(NOW(), 1, 'Restaurante A', ' especializado em pratos italianos', '(11) 1234-5678', 4.5, '12345678901234'),
+(NOW(), 1, 'Restaurante B', 'serve os melhores churrascos da região', '(11) 5678-1234', 4.7, '56789012345678'),
+(NOW(), 1, 'Restaurante C', 'oferece uma variedade de pratos da culinária japonesa', '(11) 9012-3456', 4.3, '90123456789012');
 
 /* INSERTS PARA A TABELA CATEGORIA_ESTABELECIMENTO */
 INSERT INTO categoria_estabelecimeto (date_Create, status, nome, descricao) VALUES
@@ -339,10 +360,11 @@ INSERT INTO cupom (date_Create, status, codigo, valor, descriao, validade) VALUE
 (NOW(), 1, 'DESC20', 20, 'Desconto de 20% em seu próximo pedido', 45);
 
 /* INSERTS PARA A TABELA ADICIONAL_PRODUTO_PEDIDO */
-INSERT INTO adicional_produto_pedido (date_Create, status, quantidade, adicional_ID, ID_produto) VALUES
-(NOW(), 1, 2, 1, 1),
-(NOW(), 1, 3, 2, 2),
-(NOW(), 1, 1, 3, 3);
+INSERT INTO adicional_produto_pedido (date_Create, status, quantidade, adicional_ID, pedido_produto_ID) 
+VALUES 
+(NOW(), 1, 2, 1, NULL), 
+(NOW(), 1, 3, 2,NULL ), 
+(NOW(), 1, 1, 3,NULL);
 
 /* INSERTS PARA A TABELA AVALIACAO */
 INSERT INTO avaliacao (date_Create, status, nota_restaurante, nota_pedido, descricao) VALUES
@@ -382,12 +404,12 @@ INSERT INTO pedido_produto (date_Create, status, pedido_ID, ID_produto) VALUES
 
 /* INSERTS PARA A TABELA FUNCIONAMENTO_RESTAURANTE */
 INSERT INTO funcionamento_restaurante (date_Create, status, dia, hora_abrir, hora_fechar) VALUES
-(NOW(), 1, 1, 10:00, 22:00),
-(NOW(), 1, 2, 11:00, 23:00),
-(NOW(), 1, 3, 09:00, 21:00);
+(NOW(), 1, 1, 10, 22),
+(NOW(), 1, 2, 11, 23),
+(NOW(), 1, 3, 09, 21);
 
 /* INSERTS PARA A TABELA ADICIONAR_PRODUTO */
-INSERT INTO adicionar_produto (adicional_ID, ID_produto) VALUES
+INSERT INTO adicionar_produto (ID_adicional, ID_produto) VALUES
 ( 1, 2),
 ( 1, 3),
 ( 1, 1);
